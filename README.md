@@ -1,6 +1,4 @@
-Perfect — here's a clean, professional `README.md` for your **Smart Lock App** repo. You can copy this directly into a `README.md` file in your root project folder.
 
----
 # 🔐 Smart Lock App (Solar-Powered Lock Controller)
 
 This is a mobile application developed in **Kotlin using Jetpack Compose** and **Firebase**, designed to interface with a **solar-powered smart lock**. It allows users to:
