@@ -57,7 +57,7 @@ smartlockapp/
 1. Clone this repository:
 ```
 
-git clone [[https://github.com/your-username/smartlockapp.git](https://github.com/your-username/smartlockapp.git)](https://github.com/JibbsMamogkat/smart-lock-app.git)
+git clone https://github.com/JibbsMamogkat/smart-lock-app.git
 
 ```
 
