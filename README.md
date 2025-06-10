@@ -57,7 +57,7 @@ smartlockapp/
 1. Clone this repository:
 ```
 
-git clone [https://github.com/your-username/smartlockapp.git](https://github.com/your-username/smartlockapp.git)
+git clone [[https://github.com/your-username/smartlockapp.git](https://github.com/your-username/smartlockapp.git)](https://github.com/JibbsMamogkat/smart-lock-app.git)
 
 ```
 
@@ -86,7 +86,6 @@ _Add UI previews once dashboard is done_
 ---
 
 ## 👨‍💻 Developed by
-**Mohammad Jameel Jibreel N. Mamogkat**
 
 ---
 
