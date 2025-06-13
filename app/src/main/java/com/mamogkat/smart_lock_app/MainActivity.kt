@@ -14,6 +14,12 @@ import androidx.compose.ui.tooling.preview.Preview
 import com.mamogkat.smart_lock_app.ui.theme.SmartlockappTheme
 import com.mamogkat.smart_lock_app.ui.screens.LoginScreen
 import android.widget.Toast
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Surface
+import androidx.navigation.NavController
+import androidx.navigation.compose.rememberNavController
+import com.google.firebase.FirebaseApp
+import com.mamogkat.smart_lock_app.navigation.AppNavHost
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -21,14 +27,16 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             SmartlockappTheme {
-                Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-                    LoginScreen(
-                        onLoginSuccess = {
-                            // Navigate to dashboard later — for now just log or Toast
-                            Toast.makeText(this, "Login successful", Toast.LENGTH_SHORT).show()
-                        }
-                    )
+                Surface(
+                    modifier = Modifier.fillMaxSize(),
+                    color = MaterialTheme.colorScheme.background
+                ) {
+                    val navController = rememberNavController()
+                    AppNavHost(navController = navController)
+
+                   /* FirebaseApp.initializeApp(this)*/
                 }
+
             }
         }
     }
