@@ -16,10 +16,13 @@ import com.mamogkat.smart_lock_app.ui.screens.LoginScreen
 import android.widget.Toast
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.google.firebase.FirebaseApp
 import com.mamogkat.smart_lock_app.navigation.AppNavHost
+import com.mamogkat.smart_lock_app.viewmodel.AuthViewModel
+import com.mamogkat.smart_lock_app.viewmodel.LockViewModel
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -32,7 +35,10 @@ class MainActivity : ComponentActivity() {
                     color = MaterialTheme.colorScheme.background
                 ) {
                     val navController = rememberNavController()
-                    AppNavHost(navController = navController)
+                    val lockViewModel: LockViewModel = viewModel()
+                    val authViewModel: AuthViewModel = viewModel()
+
+                    AppNavHost(navController = navController, lockViewModel = lockViewModel, authViewModel = authViewModel)
 
                    /* FirebaseApp.initializeApp(this)*/
                 }

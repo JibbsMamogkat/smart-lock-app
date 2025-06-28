@@ -54,15 +54,22 @@ fun LoginScreen(navController: NavController, modifier: Modifier = Modifier, /*o
 
         Button(
             onClick = {
-                Firebase.auth.signInWithEmailAndPassword(email, password)
-                    .addOnCompleteListener { task ->
-                        if (task.isSuccessful) {
-                            /*onLoginSuccess()*/
-                        } else {
-                            Toast.makeText(context, "Login failed", Toast.LENGTH_SHORT).show()
+                if (email.isNotBlank() && password.isNotBlank()) {
+                    Firebase.auth.signInWithEmailAndPassword(email, password)
+                        .addOnCompleteListener { task ->
+                            if (task.isSuccessful) {
+                                navController.navigate("dashboard") {
+                                    popUpTo("login") { inclusive = true }
+                                }
+                            } else {
+                                Toast.makeText(context, "Login failed", Toast.LENGTH_SHORT).show()
+                            }
                         }
-                    }
-            },
+                } else {
+                    Toast.makeText(context, "Email and Password must not be empty", Toast.LENGTH_SHORT).show()
+                }
+            }
+            ,
             modifier = Modifier.fillMaxWidth()
         ) {
             Text("Login")
