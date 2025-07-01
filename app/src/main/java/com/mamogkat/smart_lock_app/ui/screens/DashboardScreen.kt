@@ -33,15 +33,15 @@ fun DashboardScreen(navController: NavController, viewModel: LockViewModel) {
         Spacer(modifier = Modifier.height(10.dp))
         Text(text = status, fontSize = 18.sp)
 
-        Spacer(modifier = Modifier.height(16.dp))
-
-        if (status == "🔓 Registration Mode Enabled") {
-            Button(onClick = {
-                navController.navigate("register_user")
-            }) {
-                Text("Register New User")
-            }
-        }
+//        Spacer(modifier = Modifier.height(16.dp))
+//
+//        if (status == "🔓 Registration Mode Enabled") {
+//            Button(onClick = {
+//                navController.navigate("register_user")
+//            }) {
+//                Text("Register New User")
+//            }
+//        }
 
         Spacer(modifier = Modifier.height(16.dp))
 

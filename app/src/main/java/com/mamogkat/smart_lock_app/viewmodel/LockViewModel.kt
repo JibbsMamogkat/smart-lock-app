@@ -3,6 +3,7 @@ package com.mamogkat.smart_lock_app.viewmodel
 import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.google.firebase.Timestamp
 import com.google.firebase.firestore.FirebaseFirestore
 import com.mamogkat.smart_lock_app.data.SmartLockRepository
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -57,6 +58,29 @@ class LockViewModel : ViewModel() {
             _commandStatus.value = if (result) "🔒 Lock command sent!" else "❌ Failed to send lock"
         }
     }
+
+    fun isRegistrationAllowed(onResult: (Boolean) -> Unit) {
+        val db = FirebaseFirestore.getInstance()
+        db.collection("smart_lock")
+            .document("status")
+            .get()
+            .addOnSuccessListener { document ->
+                val mode = document.getString("mode")
+                val lastSeen = document.getTimestamp("lastSeen") // Firebase timestamp
+                val now = Timestamp.now()
+
+                if (mode == "registration" && lastSeen != null) {
+                    val diff = now.seconds - lastSeen.seconds
+                    onResult(diff <= 300) // 300s = 5min
+                } else {
+                    onResult(false)
+                }
+            }
+            .addOnFailureListener {
+                onResult(false)
+            }
+    }
+
 
 
 }
