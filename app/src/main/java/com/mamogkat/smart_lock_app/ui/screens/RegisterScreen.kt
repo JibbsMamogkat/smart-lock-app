@@ -24,38 +24,6 @@ fun RegisterScreen(
     authViewModel: AuthViewModel,
     modifier: Modifier = Modifier
 ) {
-    val context = LocalContext.current
-    val wifiManager = remember {
-        context.getSystemService(Context.WIFI_SERVICE) as WifiManager
-    }
-
-    // Get the current SSID and remove quotes
-    val currentSsid = remember {
-        wifiManager.connectionInfo.ssid.replace("\"", "")
-    }
-
-    val isConnectedToSmartLock = remember(currentSsid) {
-        currentSsid.contains("SmartLock", ignoreCase = true)
-    }
-
-    Column(
-        modifier = Modifier
-            .fillMaxSize()
-            .padding(24.dp),
-        verticalArrangement = Arrangement.Center,
-        horizontalAlignment = Alignment.CenterHorizontally
-    ) {
-        Text(
-            text = if (isConnectedToSmartLock) "✅ Connected to SmartLock WiFi" else "Connect to your SmartLock WiFi",
-            fontSize = 16.sp
-        )
-        Spacer(modifier = Modifier.height(10.dp))
-        Button(onClick = {
-            navController.navigate("login")
-        }) {
-            Text("Back to Login", fontSize = 16.sp)
-        }
-    }
 }
 
 // ================================= prev code by duff==================================
