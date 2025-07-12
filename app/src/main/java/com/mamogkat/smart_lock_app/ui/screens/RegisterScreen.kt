@@ -31,10 +31,13 @@ fun RegisterScreen(
     var email by rememberSaveable { mutableStateOf("") }
     var password by rememberSaveable { mutableStateOf("") }
 
-    // Fetch registration mode once
-    LaunchedEffect(Unit) {
-        lockViewModel.isRegistrationAllowed {
+    // Observe Firebase real-time mode
+    DisposableEffect(Unit) {
+        lockViewModel.observeRegistrationAllowed {
             registrationAllowed = it
+        }
+        onDispose {
+            lockViewModel.stopObservingRegistrationAllowed()
         }
     }
 
@@ -102,11 +105,11 @@ fun RegisterScreen(
                 }) {
                     Text("Register")
                 }
-
             }
         }
     }
 }
+
 
 
 // ================================= prev code by duff==================================
