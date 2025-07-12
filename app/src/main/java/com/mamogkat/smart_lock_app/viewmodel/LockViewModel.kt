@@ -29,13 +29,21 @@ class LockViewModel : ViewModel() {
                     val alert = snapshot.child("alert").getValue(String::class.java) ?: "none"
                     val mode = snapshot.child("mode").getValue(String::class.java) ?: "normal"
 
-                    _status.value = when {
-                        mode == "registration" -> "🔐 Registration Mode Enabled"
-                        alert == "tamper" -> "⚠️ Tamper Detected!"
-                        !isOnline -> "Lock is Offline"
-                        isLocked -> "Lock is Locked"
-                        else -> "Lock is Unlocked"
+
+                    val statusMessages = mutableListOf<String>()
+
+                    if (mode == "registration") statusMessages.add("🔐 Registration Mode Enabled")
+                    if (alert == "tamper") statusMessages.add("⚠️ Tamper Detected!")
+                    if (!isOnline) statusMessages.add("📴 Lock is Offline")
+                    if (isOnline) {
+                        if (isLocked) {
+                            statusMessages.add("🔒 Lock is Locked")
+                        } else {
+                            statusMessages.add("🔓 Lock is Unlocked")
+                        }
                     }
+
+                    _status.value = statusMessages.joinToString(separator = "\n")
                 }
 
                 override fun onCancelled(error: DatabaseError) {

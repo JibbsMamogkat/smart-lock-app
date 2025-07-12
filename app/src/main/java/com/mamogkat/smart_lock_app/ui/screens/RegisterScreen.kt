@@ -17,6 +17,7 @@ import com.mamogkat.smart_lock_app.viewmodel.AuthViewModel
 import com.mamogkat.smart_lock_app.viewmodel.LockViewModel
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.text.input.PasswordVisualTransformation
+import kotlinx.coroutines.delay
 
 
 @Composable
@@ -65,14 +66,10 @@ fun RegisterScreen(
             }
 
             true -> {
-                Text("Enter your name to register:")
+                Text("Enter your credentials to register a new user", style = MaterialTheme.typography.headlineSmall)
+                Text("You only have 1 minute to register a new user.", fontSize = 12.sp, color = colorResource(id = com.mamogkat.smart_lock_app.R.color.mmcm_red))
+                CountdownTimer(onTimerFinish = { registrationAllowed = false })
                 Spacer(modifier = Modifier.height(8.dp))
-                OutlinedTextField(
-                    value = name,
-                    onValueChange = { name = it },
-                    label = { Text("Name") },
-                    modifier = Modifier.fillMaxWidth()
-                )
 
                 OutlinedTextField(
                     value = email,
@@ -108,6 +105,31 @@ fun RegisterScreen(
             }
         }
     }
+}
+
+@Composable
+fun CountdownTimer(
+    totalTime: Long = 60_000L, // 1 minute in ms
+    interval: Long = 1_000L,    // 1 second tick
+    onTimerFinish: () -> Unit
+) {
+    var timeLeft by remember { mutableStateOf(totalTime) }
+
+    LaunchedEffect(Unit) {
+        while (timeLeft > 0L) {
+            delay(interval)
+            timeLeft -= interval
+        }
+        onTimerFinish()
+    }
+
+    val seconds = (timeLeft / 1000).toInt()
+
+    Text(
+        text = "Time left: $seconds sec",
+        style = MaterialTheme.typography.bodyLarge,
+        color = if (seconds <= 10) colorResource(id = com.mamogkat.smart_lock_app.R.color.mmcm_red) else MaterialTheme.colorScheme.onSurface,
+    )
 }
 
 
